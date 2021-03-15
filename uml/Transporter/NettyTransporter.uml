@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.alibaba.dubbo.remoting.transport.netty4.NettyTransporter</OriginalElement>
+  <nodes>
+    <node x="505.99999999999994" y="0.0">com.alibaba.dubbo.common.extension.SPI</node>
+    <node x="445.99999999999994" y="164.0">com.alibaba.dubbo.remoting.transport.mina.MinaTransporter</node>
+    <node x="217.99999999999994" y="164.0">com.alibaba.dubbo.remoting.transport.netty.NettyTransporter</node>
+    <node x="0.0" y="164.0">com.alibaba.dubbo.config.mock.MockTransporter</node>
+    <node x="664.0" y="164.0">com.alibaba.dubbo.remoting.transport.netty4.NettyTransporter</node>
+    <node x="892.0" y="164.0">com.alibaba.dubbo.remoting.transport.grizzly.GrizzlyTransporter</node>
+    <node x="465.99999999999994" y="82.0">com.alibaba.dubbo.remoting.Transporter</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.alibaba.dubbo.remoting.Transporter" target="com.alibaba.dubbo.common.extension.SPI">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.config.mock.MockTransporter" target="com.alibaba.dubbo.remoting.Transporter">
+      <point x="0.0" y="-16.0" />
+      <point x="99.0" y="134.0" />
+      <point x="481.79999999999995" y="134.0" />
+      <point x="-63.19999999999999" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.transport.netty.NettyTransporter" target="com.alibaba.dubbo.remoting.Transporter">
+      <point x="0.0" y="-16.0" />
+      <point x="321.99999999999994" y="144.0" />
+      <point x="513.3999999999999" y="144.0" />
+      <point x="-31.600000000000023" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.transport.mina.MinaTransporter" target="com.alibaba.dubbo.remoting.Transporter">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.transport.grizzly.GrizzlyTransporter" target="com.alibaba.dubbo.remoting.Transporter">
+      <point x="0.0" y="-16.0" />
+      <point x="1006.0" y="134.0" />
+      <point x="608.2" y="134.0" />
+      <point x="63.200000000000045" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.transport.netty4.NettyTransporter" target="com.alibaba.dubbo.remoting.Transporter">
+      <point x="0.0" y="-16.0" />
+      <point x="768.0" y="144.0" />
+      <point x="576.5999999999999" y="144.0" />
+      <point x="31.600000000000023" y="16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="560.0" y="98.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

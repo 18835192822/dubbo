@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.alibaba.dubbo.remoting.exchange.support.header.HeaderExchangeServer</OriginalElement>
+  <nodes>
+    <node x="123.00000000000001" y="82.0">com.alibaba.dubbo.remoting.Server</node>
+    <node x="264.7777777777778" y="164.0">com.alibaba.dubbo.remoting.exchange.ExchangeServer</node>
+    <node x="184.5" y="0.0">com.alibaba.dubbo.common.Resetable</node>
+    <node x="456.0" y="246.0">com.alibaba.dubbo.remoting.exchange.support.ExchangeServerDelegate</node>
+    <node x="0.0" y="246.0">com.alibaba.dubbo.remoting.p2p.exchange.ExchangePeer</node>
+    <node x="175.14814814814815" y="328.0">com.alibaba.dubbo.remoting.p2p.exchange.support.ExchangeServerPeer</node>
+    <node x="36.50000000000003" y="0.0">com.alibaba.dubbo.remoting.Endpoint</node>
+    <node x="188.0" y="246.0">com.alibaba.dubbo.remoting.exchange.support.header.HeaderExchangeServer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.alibaba.dubbo.remoting.Server" target="com.alibaba.dubbo.common.Resetable">
+      <point x="27.0" y="-16.0" />
+      <point x="204.0" y="57.0" />
+      <point x="253.5" y="57.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.p2p.exchange.support.ExchangeServerPeer" target="com.alibaba.dubbo.remoting.p2p.exchange.ExchangePeer">
+      <point x="-57.0" y="-16.0" />
+      <point x="232.14814814814815" y="303.0" />
+      <point x="84.0" y="303.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.p2p.exchange.support.ExchangeServerPeer" target="com.alibaba.dubbo.remoting.exchange.support.ExchangeServerDelegate">
+      <point x="57.0" y="-16.0" />
+      <point x="346.14814814814815" y="303.0" />
+      <point x="590.0" y="303.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.exchange.support.header.HeaderExchangeServer" target="com.alibaba.dubbo.remoting.exchange.ExchangeServer">
+      <point x="0.0" y="-16.0" />
+      <point x="312.0" y="221.0" />
+      <point x="358.7777777777778" y="221.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.p2p.exchange.ExchangePeer" target="com.alibaba.dubbo.remoting.exchange.ExchangeServer">
+      <point x="42.0" y="-16.0" />
+      <point x="126.0" y="221.0" />
+      <point x="296.1111111111111" y="221.0" />
+      <point x="-62.666666666666686" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.exchange.ExchangeServer" target="com.alibaba.dubbo.remoting.Server">
+      <point x="0.0" y="-16.0" />
+      <point x="358.7777777777778" y="139.0" />
+      <point x="204.0" y="139.0" />
+      <point x="27.0" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.p2p.exchange.ExchangePeer" target="com.alibaba.dubbo.remoting.Server">
+      <point x="-42.0" y="-16.0" />
+      <point x="42.00000000000003" y="139.0" />
+      <point x="150.0" y="139.0" />
+      <point x="-27.0" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.exchange.support.ExchangeServerDelegate" target="com.alibaba.dubbo.remoting.exchange.ExchangeServer">
+      <point x="0.0" y="-16.0" />
+      <point x="590.0" y="221.0" />
+      <point x="421.44444444444446" y="221.0" />
+      <point x="62.66666666666663" y="16.0" />
+    </edge>
+    <edge source="com.alibaba.dubbo.remoting.Server" target="com.alibaba.dubbo.remoting.Endpoint">
+      <point x="-27.0" y="-16.0" />
+      <point x="150.0" y="57.0" />
+      <point x="100.50000000000003" y="57.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="362.0" y="180.0" />
+  <SelectedNodes>
+    <node>com.alibaba.dubbo.remoting.exchange.support.header.HeaderExchangeServer</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
