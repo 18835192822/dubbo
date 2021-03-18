@@ -52,6 +52,7 @@ public class CuratorZookeeperClient extends AbstractZookeeperClient<CuratorWatch
                 builder = builder.authorization("digest", authority.getBytes());
             }
             client = builder.build();
+            //监听zk连接状态，在连接丢失、已连接、已重连三种状态时触发变更动作。
             client.getConnectionStateListenable().addListener(new ConnectionStateListener() {
                 @Override
                 public void stateChanged(CuratorFramework client, ConnectionState state) {
