@@ -90,23 +90,65 @@ import static org.apache.dubbo.rpc.cluster.Constants.ROUTER_KEY;
 
 /**
  * RegistryDirectory
+ * <p>
+ * 消费者每依赖一个服务，就对应一个注册目录
  */
 public class RegistryDirectory<T> extends AbstractDirectory<T> implements NotifyListener {
 
     private static final Logger logger = LoggerFactory.getLogger(RegistryDirectory.class);
 
+    /**
+     * 集群策略适配器，这里通过 Dubbo SPI 方式
+     */
     private static final Cluster CLUSTER = ExtensionLoader.getExtensionLoader(Cluster.class).getAdaptiveExtension();
 
+    /**
+     * 路由工厂适配器，也是通过 Dubbo SPI 动态创建的适配器实例。routerFactory 字段和 cluster 字段都是静态字段，多个 RegistryDirectory 对象通用。
+     */
     private static final RouterFactory ROUTER_FACTORY = ExtensionLoader.getExtensionLoader(RouterFactory.class)
             .getAdaptiveExtension();
 
-    private final String serviceKey; // Initialization at construction time, assertion not null
-    private final Class<T> serviceType; // Initialization at construction time, assertion not null
-    private final Map<String, String> queryMap; // Initialization at construction time, assertion not null
-    private final URL directoryUrl; // Initialization at construction time, assertion not null, and always assign non null value
+    /**
+     * 服务对应的 ServiceKey，默认是 {interface}:[group]:[version] 三部分构成。
+     * Initialization at construction time, assertion not null
+     */
+    private final String serviceKey;
+
+
+    /**
+     * 服务接口类型，例如，org.apache.dubbo.demo.DemoService。
+     * Initialization at construction time, assertion not null
+     */
+    private final Class<T> serviceType;
+
+    /**
+     * Consumer URL 中 refer 参数解析后得到的全部 KV。
+     * Initialization at construction time, assertion not null
+     */
+    private final Map<String, String> queryMap;
+
+    /**
+     * 只保留 Consumer 属性的 URL，也就是由 queryMap 集合重新生成的 URL。
+     * Initialization at construction time, assertion not null, and always assign non null value
+     */
+    private final URL directoryUrl;
+
+    /**
+     * 是否引用多个服务组。
+     */
     private final boolean multiGroup;
-    private Protocol protocol; // Initialization at the time of injection, the assertion is not null
-    private Registry registry; // Initialization at the time of injection, the assertion is not null
+
+    /**
+     * 使用的 Protocol 实现。
+     * Initialization at the time of injection, the assertion is not null
+     */
+    private Protocol protocol;
+
+    /**
+     * 使用的注册中心实现。
+     * Initialization at the time of injection, the assertion is not null
+     */
+    private Registry registry;
     private volatile boolean forbidden = false;
     private boolean shouldRegister;
     private boolean shouldSimplified;
@@ -120,11 +162,22 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
      * Priority: override>-D>consumer>provider
      * Rule one: for a certain provider <ip:port,timeout=100>
      * Rule two: for all providers <* ,timeout=5000>
+     *
+     * 动态更新的配置信息
+     * The initial value is null and the midway may be assigned to null, please use the local variable reference
      */
-    private volatile List<Configurator> configurators; // The initial value is null and the midway may be assigned to null, please use the local variable reference
+    private volatile List<Configurator> configurators;
 
-    // Map<url, Invoker> cache service url to invoker mapping.
-    private volatile Map<String, Invoker<T>> urlInvokerMap; // The initial value is null and the midway may be assigned to null, please use the local variable reference
+    /**
+     * Provider URL 与对应 Invoker 之间的映射，该集合会与 invokers 字段同时动态更新。
+     * Map<url, Invoker> cache service url to invoker mapping.
+     * The initial value is null and the midway may be assigned to null, please use the local variable reference
+     */
+    private volatile Map<String, Invoker<T>> urlInvokerMap;
+
+    /**
+     * 动态更新的 Invoker 集合。
+     */
     private volatile List<Invoker<T>> invokers;
 
     // Set<invokerUrls> cache invokeUrls to invokers mapping.
@@ -135,6 +188,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
 
 
     public RegistryDirectory(Class<T> serviceType, URL url) {
+        //传入的url参数是注册中心的URL，例如，zookeeper://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?...，其中refer参数包含了Consumer信息，例如，refer=application=dubbo-demo-api-consumer&dubbo=2.0.2&interface=org.apache.dubbo.demo.DemoService&pid=13423&register.ip=192.168.124.3&side=consumer(URLDecode之后的值)
         super(url);
         if (serviceType == null) {
             throw new IllegalArgumentException("service type is null.");
@@ -147,7 +201,11 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
         }
         this.serviceType = serviceType;
         this.serviceKey = url.getServiceKey();
+
+        //解析refer参数值，得到其中Consumer的属性信息
         this.queryMap = StringUtils.parseQueryString(url.getParameterAndDecoded(REFER_KEY));
+
+        //将queryMap中的KV作为参数，重新构造URL，其中的protocol和path部分不变
         this.overrideDirectoryUrl = this.directoryUrl = turnRegistryUrlToConsumerUrl(url);
         String group = directoryUrl.getParameter(GROUP_KEY, "");
         this.multiGroup = group != null && (ANY_VALUE.equals(group) || group.contains(","));
@@ -182,6 +240,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
         setConsumerUrl(url);
         CONSUMER_CONFIGURATION_LISTENER.addNotifyListener(this);
         serviceConfigurationListener = new ReferenceConfigurationListener(this, url);
+        //将
         registry.subscribe(url, this);
     }
 
@@ -248,7 +307,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
         List<AddressListener> supportedListeners = addressListenerExtensionLoader.getActivateExtension(getUrl(), (String[]) null);
         if (supportedListeners != null && !supportedListeners.isEmpty()) {
             for (AddressListener addressListener : supportedListeners) {
-                providerURLs = addressListener.notify(providerURLs, getConsumerUrl(),this);
+                providerURLs = addressListener.notify(providerURLs, getConsumerUrl(), this);
             }
         }
         refreshOverrideAndInvoker(providerURLs);
