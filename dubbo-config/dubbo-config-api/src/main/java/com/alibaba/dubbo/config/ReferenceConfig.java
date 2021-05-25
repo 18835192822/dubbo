@@ -381,7 +381,7 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
                 }
             } else {
                 // assemble URL from register center's configuration
-                //从注册中心的配置中组装URL，dubbo的配置可以放在注册中心，这种就是从注册中心拿配置
+                //从注册中心的配置中组装URL
                 List<URL> us = loadRegistries(false);
                 if (us != null && !us.isEmpty()) {
                     for (URL u : us) {
@@ -397,6 +397,7 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
                 }
             }
 
+            //单注册中心和多注册中心
             if (urls.size() == 1) {
                 invoker = refprotocol.refer(interfaceClass, urls.get(0));
             } else {
