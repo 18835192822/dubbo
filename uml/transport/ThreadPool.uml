@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.apache.dubbo.common.threadpool.support.cached.CachedThreadPool</OriginalElement>
+  <nodes>
+    <node x="394.5" y="0.0">org.apache.dubbo.common.extension.SPI</node>
+    <node x="218.0" y="164.0">org.apache.dubbo.common.threadpool.support.cached.CachedThreadPool</node>
+    <node x="664.0" y="164.0">org.apache.dubbo.common.threadpool.support.limited.LimitedThreadPool</node>
+    <node x="359.5" y="82.0">org.apache.dubbo.common.threadpool.ThreadPool</node>
+    <node x="446.0" y="164.0">org.apache.dubbo.common.threadpool.support.fixed.FixedThreadPool</node>
+    <node x="0.0" y="164.0">org.apache.dubbo.common.threadpool.support.eager.EagerThreadPool</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.apache.dubbo.common.threadpool.support.fixed.FixedThreadPool" target="org.apache.dubbo.common.threadpool.ThreadPool">
+      <point x="0.0" y="-16.0" />
+      <point x="545.0" y="144.0" />
+      <point x="452.0" y="144.0" />
+      <point x="18.5" y="16.0" />
+    </edge>
+    <edge source="org.apache.dubbo.common.threadpool.support.eager.EagerThreadPool" target="org.apache.dubbo.common.threadpool.ThreadPool">
+      <point x="0.0" y="-16.0" />
+      <point x="99.0" y="134.0" />
+      <point x="378.0" y="134.0" />
+      <point x="-55.5" y="16.0" />
+    </edge>
+    <edge source="org.apache.dubbo.common.threadpool.support.limited.LimitedThreadPool" target="org.apache.dubbo.common.threadpool.ThreadPool">
+      <point x="0.0" y="-16.0" />
+      <point x="773.0" y="134.0" />
+      <point x="489.0" y="134.0" />
+      <point x="55.5" y="16.0" />
+    </edge>
+    <edge source="org.apache.dubbo.common.threadpool.ThreadPool" target="org.apache.dubbo.common.extension.SPI">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="org.apache.dubbo.common.threadpool.support.cached.CachedThreadPool" target="org.apache.dubbo.common.threadpool.ThreadPool">
+      <point x="0.0" y="-16.0" />
+      <point x="322.0" y="144.0" />
+      <point x="415.0" y="144.0" />
+      <point x="-18.5" y="16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="441.0" y="98.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

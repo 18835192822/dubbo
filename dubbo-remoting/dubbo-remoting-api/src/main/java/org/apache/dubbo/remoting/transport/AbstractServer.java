@@ -42,32 +42,63 @@ import static org.apache.dubbo.remoting.Constants.IDLE_TIMEOUT_KEY;
 
 /**
  * AbstractServer
+ * 是对服务端的抽象，实现了服务端的公共逻辑
  */
 public abstract class AbstractServer extends AbstractEndpoint implements RemotingServer {
 
     protected static final String SERVER_THREAD_POOL_NAME = "DubboServerHandler";
     private static final Logger logger = LoggerFactory.getLogger(AbstractServer.class);
+
+    /**
+     * 当前 Server 关联的线程池，由 ExecutorRepository 创建并管理。
+     */
     ExecutorService executor;
+
+    /**
+     * 本地地址，从 URL 中的参数中获取
+     */
     private InetSocketAddress localAddress;
+
+    /**
+     * 绑定地址，从 URL 中的参数中获取，默认与本地地址相同
+     */
     private InetSocketAddress bindAddress;
+
+    /**
+     * 该 Server 能接收的最大连接数，从 URL 的 accepts 参数中获取，默认值为 0，表示没有限制。
+     */
     private int accepts;
     private int idleTimeout;
 
+    /**
+     * 负责管理线程池
+     */
     private ExecutorRepository executorRepository = ExtensionLoader.getExtensionLoader(ExecutorRepository.class).getDefaultExtension();
 
+    /**
+     * 初始化本类属性
+     * @param url
+     * @param handler
+     * @throws RemotingException
+     */
     public AbstractServer(URL url, ChannelHandler handler) throws RemotingException {
         super(url, handler);
         localAddress = getUrl().toInetSocketAddress();
 
+        //根据传入的URL初始化localAddress和bindAddress
         String bindIp = getUrl().getParameter(Constants.BIND_IP_KEY, getUrl().getHost());
         int bindPort = getUrl().getParameter(Constants.BIND_PORT_KEY, getUrl().getPort());
         if (url.getParameter(ANYHOST_KEY, false) || NetUtils.isInvalidLocalHost(bindIp)) {
             bindIp = ANYHOST_VALUE;
         }
         bindAddress = new InetSocketAddress(bindIp, bindPort);
+
+        //初始化accepts等字段
         this.accepts = url.getParameter(ACCEPTS_KEY, DEFAULT_ACCEPTS);
         this.idleTimeout = url.getParameter(IDLE_TIMEOUT_KEY, DEFAULT_IDLE_TIMEOUT);
         try {
+
+            //启动该Server
             doOpen();
             if (logger.isInfoEnabled()) {
                 logger.info("Start " + getClass().getSimpleName() + " bind " + getBindAddress() + ", export " + getLocalAddress());
@@ -76,6 +107,8 @@ public abstract class AbstractServer extends AbstractEndpoint implements Remotin
             throw new RemotingException(url.toInetSocketAddress(), null, "Failed to bind " + getClass().getSimpleName()
                     + " on " + getLocalAddress() + ", cause: " + t.getMessage(), t);
         }
+
+        //获取该Server关联的线程池
         executor = executorRepository.createExecutorIfAbsent(url);
     }
 

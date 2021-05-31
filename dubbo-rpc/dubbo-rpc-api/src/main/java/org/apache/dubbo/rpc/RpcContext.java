@@ -53,6 +53,7 @@ import static org.apache.dubbo.rpc.Constants.RETURN_KEY;
 public class RpcContext {
 
     /**
+     * 在发起请求时，会使用该RpcContext来存储上下文信息
      * use internal thread local to improve performance
      */
     // FIXME REQUEST_CONTEXT
@@ -63,6 +64,9 @@ public class RpcContext {
         }
     };
 
+    /**
+     * 在接收到响应的时候，会使用该RpcContext来存储上下文信息
+     */
     // FIXME RESPONSE_CONTEXT
     private static final InternalThreadLocal<RpcContext> SERVER_LOCAL = new InternalThreadLocal<RpcContext>() {
         @Override

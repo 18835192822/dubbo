@@ -60,6 +60,10 @@ public abstract class AbstractEndpoint extends AbstractPeer implements Resetable
         }
     }
 
+    /**
+     * 重置本类的三个属性
+     * @param url
+     */
     @Override
     public void reset(URL url) {
         if (isClosed()) {

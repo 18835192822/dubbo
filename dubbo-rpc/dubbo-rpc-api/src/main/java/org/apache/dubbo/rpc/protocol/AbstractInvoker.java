@@ -51,12 +51,21 @@ public abstract class AbstractInvoker<T> implements Invoker<T> {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     * 该 Invoker 对象封装的业务接口类型，例如 Demo 示例中的 DemoService 接口。
+     */
     private final Class<T> type;
 
+    /**
+     * 与当前 Invoker 关联的 URL 对象，其中包含了全部的配置信息。
+     */
     private final URL url;
 
     private final Map<String, Object> attachment;
 
+    /**
+     * 这两个字段用来控制当前 Invoker 的状态。available 默认值为 true，destroyed 默认值为 false。在 destroy() 方法中会将 available 设置为 false，将 destroyed 字段设置为 true。
+     */
     private volatile boolean available = true;
 
     private AtomicBoolean destroyed = new AtomicBoolean(false);

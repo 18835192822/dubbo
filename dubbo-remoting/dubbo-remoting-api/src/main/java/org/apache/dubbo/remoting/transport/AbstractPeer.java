@@ -28,8 +28,14 @@ import org.apache.dubbo.remoting.RemotingException;
  */
 public abstract class AbstractPeer implements Endpoint, ChannelHandler {
 
+    /**
+     * AbstractPeer 对 ChannelHandler 接口的所有实现，都是委托给了这个 ChannelHandler 对象。
+     */
     private final ChannelHandler handler;
 
+    /**
+     * 该端点自身的 URL 类型
+     */
     private volatile URL url;
 
     // closing closed means the process is being closed and close is finished
